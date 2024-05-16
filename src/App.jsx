@@ -5,14 +5,15 @@ export default function App() {
   return (
     <div>
       <h1>Credit card validator-ReactJs</h1>
-      <CreditCard />
+      <CreditCardOne />
+      <CreditCardTwo />
     </div>
   );
 }
 
-function CreditCard() {
+function CreditCardOne() {
   const [cc, setCC] = useState("");
-  const validaton = validator.isCreditCard(cc);
+  const validaton = validator.isCreditCard(cc.trim());
 
   return (
     <div>
@@ -27,14 +28,28 @@ function CreditCard() {
         <p style={{ color: "green" }}>Your credit card is correct</p>
       )}
       {cc.length > 0 && !validaton && (
-        <p style={{ color: "green" }}>Your credit card is correct</p>
+        <p style={{ color: "red" }}>Please Enter correct credit card value</p>
       )}
     </div>
   );
 }
 
-// {validaton ? (
-//   <p style={{ color: "green" }}>Your credit card is correct</p>
-// ) : (
-//   <p style={{ color: "red" }}>Please Enter correct credit card value</p>
-// )}
+function CreditCardTwo() {
+  const [errorMessage, setErrorMessage] = useState("");
+  const validateCard = (value) => {
+    if (validator.isCreditCard(value)) {
+      setErrorMessage("Valid credit card Number");
+    } else {
+      setErrorMessage("Enter valid credit card Number");
+    }
+  };
+  return (
+    <div>
+      <h2>Validating CreditCard in ReactJS</h2>
+      <span>Enter CreditCard:</span>
+      <input type="text" onChange={(e) => validateCard(e.target.value)}></input>
+      <br />
+      <span>{errorMessage}</span>
+    </div>
+  );
+}
